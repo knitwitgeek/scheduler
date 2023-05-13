@@ -21,33 +21,8 @@ const routes: Routes = [
     canActivate: [ AuthGuardService ]
   },
   {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
     path: 'home',
     component: HomeComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'login-form',
-    component: LoginFormComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'reset-password',
-    component: ResetPasswordFormComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'create-account',
-    component: CreateAccountFormComponent,
-    canActivate: [ AuthGuardService ]
-  },
-  {
-    path: 'change-password/:recoveryCode',
-    component: ChangePasswordFormComponent,
     canActivate: [ AuthGuardService ]
   },
   {
