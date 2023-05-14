@@ -5,11 +5,6 @@ export const navigation = [
     icon: 'home'
   },
   {
-    text: 'Tasks',
-    path: '/tasks',
-    icon: 'comment'
-  },
-  {
     text: 'Scheduler',
     path: '/pages/scheduler',
     icon: 'event'
