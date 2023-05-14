@@ -8,14 +8,47 @@ import { Appointment, Presentation, AppointmentService } from 'src/app/appointme
   providers: [AppointmentService]
 })
 export class SchedulerComponent {
-
   appointments: Appointment[];
   presentations: Presentation[];
   currentDate: Date = new Date(2021, 4, 25);
+  draggingGroupName = 'planningGroup';
 
   constructor(apptService: AppointmentService) {
     this.appointments = apptService.getAppointments();
     this.presentations = apptService.getPresentations();
+    this.onAppointmentRemove = this.onAppointmentRemove.bind(this);
+    this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
+  }
+
+  onAppointmentRemove(event: any) {
+    const index = this.appointments.indexOf(event.itemData);
+    if(index >= 0) {
+      this.appointments.splice(index, 1);
+      this.presentations.push(event.itemData);
+    }
+  }
+
+  onAppointmentAdd(event: any) {
+    const index = this.presentations.indexOf(event.fromData);
+    if(index >= 0) {
+      this.presentations.splice(index, 1);
+      // need to adjust end time probabaly?
+      this.appointments.push(event.itemData);
+    }
+  }
+
+  onListDragStart(event: any) {
+    event.cancel = true;
+  }
+
+  onItemDragStart(event: any) {
+    event.itemData = event.fromData;
+  }
+
+  onItemDragEnd(event: any) {
+    if(event.toData) {
+      event.cancel = true;
+    }
   }
 
   onAppointmentFormOpening(data: any) {
@@ -64,6 +97,6 @@ export class SchedulerComponent {
   }
 
   getPresentationById(id: number): Presentation {
-    return this.presentations.filter(p => p.id === id)[0];
+    return this.presentations.filter(p => p.presentationId === id)[0];
   }
 }

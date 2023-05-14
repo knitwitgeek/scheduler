@@ -1,59 +1,88 @@
-<h2 class="content-block">Scheduler</h2>
-<dx-scheduler 
-    id="scheduler"
-    timeZone="America/New York"
-    [dataSource]="appointments"
-    textExpr="title"
-    allDayExpr="dayLong"
-    recurrenceRuleExpr="recurrence"
-    [currentDate]="currentDate"
-    [views]="['day', 'week']"
-    currentView="day"
-    [showAllDayPanel]="false"
-    [cellDuration]="5"
-    appointmentTemplate="appointment-template"
-    appointmentTooltipTemplate="tooltip-template"
-    (onAppointmentFormOpening)="onAppointmentFormOpening($event)">
-    
-    <dxi-resource
-        fieldExpr="presentationId"
-        [dataSource]="presentations"></dxi-resource>
+<div style="padding: 20px 30px">
+    <div>
+    <dx-scroll-view id="scroll">
+        <dx-draggable
+        id="list"
+        data="dropArea"
+        [group]="draggingGroupName"
+        (onDragStart)="onListDragStart($event)"
+        >
+        <dx-draggable
+            class="item dx-card dx-theme-text-color dx-theme-background-color"
+            [clone]="true"
+            [group]="draggingGroupName"
+            [data]="p"
+            (onDragStart)="onItemDragStart($event)"
+            (onDragEnd)="onItemDragEnd($event)"
+            *ngFor="let p of presentations"
+        >
+            {{ p.title }}
+        </dx-draggable>
+        </dx-draggable>
+    </dx-scroll-view>
+    <dx-scheduler 
+        id="scheduler"
+        timeZone="America/New_York"
+        [dataSource]="appointments"
+        textExpr="title"
+        allDayExpr="dayLong"
+        recurrenceRuleExpr="recurrence"
+        [currentDate]="currentDate"
+        [views]="['day', 'week']"
+        currentView="day"
+        [showAllDayPanel]="false"
+        [cellDuration]="5"
+        
+        appointmentTooltipTemplate="tooltip-template"
+        (onAppointmentFormOpening)="onAppointmentFormOpening($event)">
+        
+        <dxi-resource
+            fieldExpr="presentationId"
+            [dataSource]="presentations"></dxi-resource>
 
-    <div *dxTemplate="let model of 'appointment-template'">
-        <div class="dx-scheduler-appointment-title">
-            {{ getPresentationById(model.targetedAppointmentData.presentationId).title}}
-        </div>
-        <div class="dx-scheduler-appointment-content-details">
-            <div class="dx-scheduler-appointment-content-date">
-                {{
-                    (model.targetedAppointmentData.displayStartDate | date: "shortTime") +
-                    " - " +
-                    (model.targetedAppointmentData.displayEndDate | date: "shortTime")
-                }}
+        <dxo-appointment-dragging
+            [group]="draggingGroupName"
+            [onRemove]="onAppointmentRemove"
+            [onAdd]="onAppointmentAdd">
+        </dxo-appointment-dragging>
+
+        <!-- <div *dxTemplate="let model of 'appointment-template'">
+            <div class="dx-scheduler-appointment-title">
+                {{ getPresentationById(model.targetedAppointmentData.presentationId).title}}
+            </div>
+            <div class="dx-scheduler-appointment-content-details">
+                <div class="dx-scheduler-appointment-content-date">
+                    {{
+                        (model.targetedAppointmentData.displayStartDate | date: "shortTime") +
+                        " - " +
+                        (model.targetedAppointmentData.displayEndDate | date: "shortTime")
+                    }}
+                </div>
+            </div>
+        </div> -->
+
+        <div *dxTemplate="let model of 'tooltip-template'">
+            <div class="presentation-tooltip">
+                <div class="presentation-info">
+                    <div class="presentation-title">
+                        {{
+                            model.appointmentData.title
+                        }}
+                    </div>
+                    <div>
+                        {{
+                            "Presenter: " + model.appointmentData.presenter
+                        }}
+                    </div>
+                    <div>
+                        {{
+                            "Duration: " + model.appointmentData.duration + " minutes"
+                        }}
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div *dxTemplate="let model of 'tooltip-template'">
-        <div class="presentation-tooltip">
-            <div class="presentation-info">
-                <div class="presentation-title">
-                    {{
-                        getPresentationById(model.appointmentData.presentationId).title
-                    }}
-                </div>
-                <div>
-                    {{
-                        "Presenter: " + getPresentationById(model.appointmentData.presentationId).presenter
-                    }}
-                </div>
-                <div>
-                    {{
-                        "Duration: " + getPresentationById(model.appointmentData.presentationId).duration + " minutes"
-                    }}
-                </div>
-            </div>
-        </div>
-    </div>
-</dx-scheduler>
-{{ appointments | json }}
+    </dx-scheduler>
+    {{ appointments | json }}
+</div>
+</div>
