@@ -28,38 +28,20 @@
         allDayExpr="dayLong"
         recurrenceRuleExpr="recurrence"
         [currentDate]="currentDate"
-        [views]="['day', 'week']"
         currentView="day"
+        [startDayHour]="6"
         [showAllDayPanel]="false"
         [cellDuration]="5"
-        
         appointmentTooltipTemplate="tooltip-template"
         (onAppointmentFormOpening)="onAppointmentFormOpening($event)">
-        
-        <dxi-resource
-            fieldExpr="presentationId"
-            [dataSource]="presentations"></dxi-resource>
+
+        <dxi-view type="day" [intervalCount]="3"> </dxi-view>
 
         <dxo-appointment-dragging
             [group]="draggingGroupName"
             [onRemove]="onAppointmentRemove"
             [onAdd]="onAppointmentAdd">
         </dxo-appointment-dragging>
-
-        <!-- <div *dxTemplate="let model of 'appointment-template'">
-            <div class="dx-scheduler-appointment-title">
-                {{ getPresentationById(model.targetedAppointmentData.presentationId).title}}
-            </div>
-            <div class="dx-scheduler-appointment-content-details">
-                <div class="dx-scheduler-appointment-content-date">
-                    {{
-                        (model.targetedAppointmentData.displayStartDate | date: "shortTime") +
-                        " - " +
-                        (model.targetedAppointmentData.displayEndDate | date: "shortTime")
-                    }}
-                </div>
-            </div>
-        </div> -->
 
         <div *dxTemplate="let model of 'tooltip-template'">
             <div class="presentation-tooltip">

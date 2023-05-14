@@ -54,23 +54,24 @@ export class SchedulerComponent {
   onAppointmentFormOpening(data: any) {
     const that = this;
     const form = data.form;
-    let presentationInfo = that.getPresentationById(data.appointmentData.presentationId) || {};
     let startDate = data.appointmentData.startDate;
+    let duration = data.appointmentData.duration;
 
     form.option('items', [{
-      label: {
-        text: 'Presentation'
-      },
-      editorType: 'dxSelectBox',
-      dataField: 'presentationId',
+      dataField: 'title',
+      editorType: 'dxTextBox'
+    }, {
+      dataField: 'presenter',
+      editorType: 'dxTextBox'
+    }, {
+      dataField: 'duration',
+      editorType: 'dxNumberBox',
       editorOptions: {
-        items: that.presentations,
-        displayExpr: 'title',
-        valueExpr: 'id',
+        width: '100%',
+        type: 'number',
         onValueChanged(args: any) {
-          presentationInfo = that.getPresentationById(args.value);
-
-          form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * presentationInfo.duration));
+          duration = args.value;
+          form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * duration))
         }
       }
     }, {
@@ -81,7 +82,7 @@ export class SchedulerComponent {
         type: 'datetime',
         onValueChanged(args: any) {
           startDate = args.value;
-          form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * presentationInfo.duration));
+          form.updateData('endDate', new Date(startDate.getTime() + 60 * 1000 * duration));
         }
       }
     }, {
