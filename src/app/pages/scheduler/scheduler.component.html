@@ -1,5 +1,4 @@
 <div style="padding: 20px 30px">
-    <div>
     <dx-scroll-view id="scroll">
         <dx-draggable
         id="list"
@@ -65,6 +64,32 @@
             </div>
         </div>
     </dx-scheduler>
-    {{ appointments | json }}
-</div>
+    <dx-button icon="plus" text="Add Activity" (click)="addPresentation()"></dx-button>
+    <dx-popup
+        [dragEnabled]="false"
+        [hideOnOutsideClick]="true"
+        [(visible)]="addPresentationVisible"
+        [width]="600">
+        <form (submit)="saveNewPresentation($event)">
+            <dx-form
+                id="newPresentationForm"
+                [formData]="newPresentation"
+                [labelMode]="'floating'"
+                validationGroup="presentationData">
+                <dxi-item dataField="title">
+                    <dxi-validation-rule type="required" message="Title is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="presenter"></dxi-item>
+                <dxi-item dataField="duration">
+                    <dxi-validation-rule type="required" message="Duration is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item itemType="group">
+                    <dxi-item itemType="button" [buttonOptions]="saveButtonOptions"></dxi-item>
+                    <dxi-item itemType="button" [buttonOptions]="cancelButtonOptions" (click)="addPresentationVisible = false"></dxi-item>
+                </dxi-item>
+            </dx-form>
+        </form>
+        <!-- <dx-button text="Save" type="success" (click)="savePresentation()"></dx-button>
+        <dx-button text="Cancel" type="normal" (click)="addPresentationVisible = false"></dx-button> -->
+    </dx-popup>
 </div>

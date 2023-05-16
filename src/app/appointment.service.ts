@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { PresentationFormData } from './pages/scheduler/scheduler.component';
 
 export interface Presentation {
   presentationId: number;
@@ -48,13 +49,11 @@ export class AppointmentService {
     return presentations;
   }
 
-  addPresentation(title: string, presenter: string, duration: number) {
+  addPresentation(presentation: PresentationFormData) {
     let id = presentations[presentations.length-1].presentationId + 1 || 1;
     presentations.push({ 
       presentationId: id,
-      title: title,
-      presenter: presenter,
-      duration: duration
+      ...presentation
     });
   }
 

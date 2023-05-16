@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { Appointment, Presentation, AppointmentService } from 'src/app/appointment.service';
 
+export interface PresentationFormData {
+  title: string;
+  presenter: string;
+  duration: number;
+}
+
 @Component({
   selector: 'app-scheduler',
   templateUrl: './scheduler.component.html',
@@ -10,12 +16,30 @@ import { Appointment, Presentation, AppointmentService } from 'src/app/appointme
 export class SchedulerComponent {
   appointments: Appointment[];
   presentations: Presentation[];
+  newPresentation: PresentationFormData;
   currentDate: Date = new Date(2021, 4, 25);
   draggingGroupName = 'planningGroup';
+  addPresentationVisible: boolean = false;
+  saveButtonOptions = {
+    text: 'Save',
+    type: 'success',
+    useSubmitBehavior: true
+  };
+  cancelButtonOptions = {
+    text: 'Cancel',
+    type: 'normal',
+    onClick: () => { this.addPresentationVisible = false; }
+  }
 
-  constructor(apptService: AppointmentService) {
-    this.appointments = apptService.getAppointments();
-    this.presentations = apptService.getPresentations();
+  constructor(private apptService: AppointmentService) {
+    this.appointments = this.apptService.getAppointments();
+    this.presentations = this.apptService.getPresentations();
+    // initialize new presentation data
+    this.newPresentation = {
+      title: '',
+      presenter: '',
+      duration: 30
+    };
     this.onAppointmentRemove = this.onAppointmentRemove.bind(this);
     this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
   }
@@ -32,7 +56,9 @@ export class SchedulerComponent {
     const index = this.presentations.indexOf(event.fromData);
     if(index >= 0) {
       this.presentations.splice(index, 1);
-      // need to adjust end time probabaly?
+      console.log(event.itemData);
+      // set end date based on start and duration
+      event.itemData.endDate = new Date(event.itemData.startDate.getTime() + 60 * 1000 * event.itemData.duration);
       this.appointments.push(event.itemData);
     }
   }
@@ -95,6 +121,16 @@ export class SchedulerComponent {
         readOnly: true
       }
     }]);
+  }
+
+  addPresentation(): void {
+    this.addPresentationVisible = true;
+  }
+
+  saveNewPresentation(event: Event): void {
+    this.apptService.addPresentation(this.newPresentation);
+    this.addPresentationVisible = false;
+    event.preventDefault();
   }
 
   getPresentationById(id: number): Presentation {
