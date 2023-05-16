@@ -50,7 +50,8 @@ export class AppointmentService {
   }
 
   addPresentation(presentation: PresentationFormData) {
-    let id = presentations[presentations.length-1].presentationId + 1 || 1;
+    //let id = presentations[presentations.length-1].presentationId + 1 || 1;
+    let id = Math.max(...presentations.map(p => p.presentationId)) + 1 || 1;
     presentations.push({ 
       presentationId: id,
       ...presentation
