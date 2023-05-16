@@ -16,6 +16,7 @@
             *ngFor="let p of presentations"
         >
             {{ p.title }}
+            <dx-button icon="clear" type="danger" (click)="removePresentation(p)"></dx-button>
         </dx-draggable>
         </dx-draggable>
     </dx-scroll-view>

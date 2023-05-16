@@ -133,7 +133,8 @@ export class SchedulerComponent {
     event.preventDefault();
   }
 
-  getPresentationById(id: number): Presentation {
-    return this.presentations.filter(p => p.presentationId === id)[0];
+  removePresentation(presentation: Presentation): void {
+    const index = this.presentations.indexOf(presentation);
+    this.presentations.splice(index,1);
   }
 }
