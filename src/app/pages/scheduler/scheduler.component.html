@@ -70,7 +70,9 @@
         [dragEnabled]="false"
         [hideOnOutsideClick]="true"
         [(visible)]="addPresentationVisible"
-        [width]="600">
+        [width]="600"
+        [height]="400"
+        title="New Activity">
         <form (submit)="saveNewPresentation($event)">
             <dx-form
                 id="newPresentationForm"
@@ -84,13 +86,13 @@
                 <dxi-item dataField="duration">
                     <dxi-validation-rule type="required" message="Duration is required"></dxi-validation-rule>
                 </dxi-item>
-                <dxi-item itemType="group">
-                    <dxi-item itemType="button" [buttonOptions]="saveButtonOptions"></dxi-item>
-                    <dxi-item itemType="button" [buttonOptions]="cancelButtonOptions" (click)="addPresentationVisible = false"></dxi-item>
+                <dxi-item>
+                    <div *dxTemplate>
+                        <dx-button [elementAttr]="{ class: 'form-save-button' }" text="Save" type="success" [useSubmitBehavior]="true" validationGroup="presentationData"></dx-button>
+                        <dx-button text="Cancel" type="normal" (click)="addPresentationVisible = false"></dx-button>
+                    </div>
                 </dxi-item>
             </dx-form>
         </form>
-        <!-- <dx-button text="Save" type="success" (click)="savePresentation()"></dx-button>
-        <dx-button text="Cancel" type="normal" (click)="addPresentationVisible = false"></dx-button> -->
     </dx-popup>
 </div>
