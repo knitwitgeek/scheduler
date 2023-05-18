@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Appointment, Presentation, AppointmentService } from 'src/app/appointment.service';
 
 export interface PresentationFormData {
@@ -13,13 +13,21 @@ export interface PresentationFormData {
   styleUrls: ['./scheduler.component.scss'],
   providers: [AppointmentService]
 })
-export class SchedulerComponent {
-  appointments: Appointment[];
-  presentations: Presentation[];
-  newPresentation: PresentationFormData;
+export class SchedulerComponent implements OnInit {
+  appointments: Appointment[] = [];
+  presentations: Presentation[] = [];
+  newPresentation: PresentationFormData = {
+    title: '',
+    presenter: '',
+    duration: 30
+  };
+  selectedPresentation: Presentation | undefined;
+
   currentDate: Date = new Date(2021, 4, 25);
   draggingGroupName = 'planningGroup';
   addPresentationVisible: boolean = false;
+  editPresentationVisible: boolean = false;
+
   saveButtonOptions = {
     text: 'Save',
     type: 'success',
@@ -31,17 +39,25 @@ export class SchedulerComponent {
     onClick: () => { this.addPresentationVisible = false; }
   }
 
-  constructor(private apptService: AppointmentService) {
+  constructor(private apptService: AppointmentService) { }
+  
+  ngOnInit() {
     this.appointments = this.apptService.getAppointments();
     this.presentations = this.apptService.getPresentations();
+
     // initialize new presentation data
+    this.clearNewPresentation();
+    
+    this.onAppointmentRemove = this.onAppointmentRemove.bind(this);
+    this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
+  }
+
+  clearNewPresentation() {
     this.newPresentation = {
       title: '',
       presenter: '',
       duration: 30
-    };
-    this.onAppointmentRemove = this.onAppointmentRemove.bind(this);
-    this.onAppointmentAdd = this.onAppointmentAdd.bind(this);
+    }
   }
 
   onAppointmentRemove(event: any) {
@@ -127,9 +143,15 @@ export class SchedulerComponent {
     this.addPresentationVisible = true;
   }
 
+  editPresentation(presentation: Presentation): void {
+    this.selectedPresentation = presentation;
+    this.editPresentationVisible = true;
+  }
+
   saveNewPresentation(event: Event): void {
     this.apptService.addPresentation(this.newPresentation);
     this.addPresentationVisible = false;
+    this.clearNewPresentation();
     event.preventDefault();
   }
 
