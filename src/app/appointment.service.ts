@@ -27,15 +27,7 @@ const presentations: Presentation[] = [
 ];
 
 // Local array for demo
-const appointments: Appointment[] = [
-  {
-      presentationId: 2,
-      title: 'Test',
-      duration: 10,
-      startDate: new Date("2021-05-25T14:15:00.000Z"),
-      endDate: new Date("2021-05-25T14:25:00.000Z")
-  }
-];
+const appointments: Appointment[] = [];
 
 @Injectable({
   providedIn: 'root'
