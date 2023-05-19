@@ -15,9 +15,9 @@
             (onDragEnd)="onItemDragEnd($event)"
             *ngFor="let p of presentations"
         >
-            {{ p.title }}
+            {{ p.title }} ({{ p.duration }} min)
             <dx-button icon="edit" type="normal" (click)="editPresentation(p)"></dx-button>
-            <dx-button icon="clear" type="danger" (click)="removePresentation(p)"></dx-button>
+            <dx-button icon="trash" type="normal" (click)="removePresentation(p)"></dx-button>
         </dx-draggable>
         </dx-draggable>
     </dx-scroll-view>
@@ -48,19 +48,13 @@
             <div class="presentation-tooltip">
                 <div class="presentation-info">
                     <div class="presentation-title">
-                        {{
-                            model.appointmentData.title
-                        }}
+                        {{ model.appointmentData.title }}
                     </div>
                     <div>
-                        {{
-                            "Presenter: " + model.appointmentData.presenter
-                        }}
+                        {{ "Presenter: " + model.appointmentData.presenter }}
                     </div>
                     <div>
-                        {{
-                            "Duration: " + model.appointmentData.duration + " minutes"
-                        }}
+                        {{ "Duration: " + model.appointmentData.duration + " minutes" }}
                     </div>
                 </div>
             </div>
@@ -91,6 +85,35 @@
                     <div *dxTemplate>
                         <dx-button [elementAttr]="{ class: 'form-save-button' }" text="Save" type="success" [useSubmitBehavior]="true" validationGroup="presentationData"></dx-button>
                         <dx-button text="Cancel" type="normal" (click)="addPresentationVisible = false"></dx-button>
+                    </div>
+                </dxi-item>
+            </dx-form>
+        </form>
+    </dx-popup>
+    <dx-popup
+        [dragEnabled]="false"
+        [hideOnOutsideClick]="true"
+        [(visible)]="editPresentationVisible"
+        [width]="600"
+        [height]="400"
+        title="Edit Activity">
+        <form (submit)="saveChanges($event)">
+            <dx-form
+                id="editPresenationForm"
+                [formData]="selectedPresentation"
+                [labelMode]="'floating'"
+                validationGroup="editData">
+                <dxi-item dataField="title">
+                    <dxi-validation-rule type="required" message="Title is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item dataField="presenter"></dxi-item>
+                <dxi-item dataField="duration">
+                    <dxi-validation-rule type="required" message="Duration is required"></dxi-validation-rule>
+                </dxi-item>
+                <dxi-item>
+                    <div *dxTemplate>
+                        <dx-button [elementAttr]="{ class: 'form-save-button' }" text="Save" type="success" [useSubmitBehavior]="true" validationGroup="editData"></dx-button>
+                        <dx-button text="Cancel" type="normal" (click)="editPresentationVisible = false"></dx-button>
                     </div>
                 </dxi-item>
             </dx-form>

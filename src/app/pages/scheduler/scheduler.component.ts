@@ -148,6 +148,11 @@ export class SchedulerComponent implements OnInit {
     this.editPresentationVisible = true;
   }
 
+  saveChanges(event: Event): void {
+    this.editPresentationVisible = false;
+    event.preventDefault();
+  }
+
   saveNewPresentation(event: Event): void {
     this.apptService.addPresentation(this.newPresentation);
     this.addPresentationVisible = false;
