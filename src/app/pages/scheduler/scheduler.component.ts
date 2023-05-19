@@ -23,7 +23,7 @@ export class SchedulerComponent implements OnInit {
   };
   selectedPresentation: Presentation | undefined;
 
-  currentDate: Date = new Date(2021, 4, 25);
+  currentDate: Date = new Date();
   draggingGroupName = 'planningGroup';
   addPresentationVisible: boolean = false;
   editPresentationVisible: boolean = false;
@@ -91,6 +91,11 @@ export class SchedulerComponent implements OnInit {
     if(event.toData) {
       event.cancel = true;
     }
+  }
+
+  onAppointmentUpdated(event: any) {
+    let appointment = event.appointmentData;
+    appointment.duration = Math.floor((appointment.endDate.getTime() - appointment.startDate.getTime())/(60 * 1000));
   }
 
   onAppointmentFormOpening(data: any) {

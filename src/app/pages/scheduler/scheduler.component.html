@@ -34,6 +34,7 @@
         [showAllDayPanel]="false"
         [cellDuration]="5"
         appointmentTooltipTemplate="tooltip-template"
+        (onAppointmentUpdated)="onAppointmentUpdated($event)"
         (onAppointmentFormOpening)="onAppointmentFormOpening($event)">
 
         <dxi-view type="day" [intervalCount]="3"> </dxi-view>
@@ -61,6 +62,7 @@
         </div>
     </dx-scheduler>
     <dx-button icon="plus" text="Add Activity" (click)="addPresentation()"></dx-button>
+    <dx-button icon="doc" text="Export" type="success" style="float:right"></dx-button>
     <dx-popup
         [dragEnabled]="false"
         [hideOnOutsideClick]="true"
