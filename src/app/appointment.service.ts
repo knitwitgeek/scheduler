@@ -3,6 +3,7 @@ import { PresentationFormData } from './pages/scheduler/scheduler.component';
 
 export interface Presentation {
   presentationId: number;
+  categoryId: number;
   title: string;
   presenter: string;
   duration: number;
@@ -10,6 +11,7 @@ export interface Presentation {
 
 export interface Appointment {
   presentationId: number;
+  categoryId: number;
   title: string;
   presenter?: string;
   duration: number;
@@ -17,17 +19,40 @@ export interface Appointment {
   endDate: Date;
 }
 
+export interface Category {
+  text: string;
+  id: number;
+  color: string;
+}
+
 const presentations: Presentation[] = [
   {
     presentationId: 1,
+    categoryId: 2,
     title: 'Opening Ceremony',
     presenter: 'Jake Lockley',
     duration: 10
   }
 ];
 
-// Local array for demo
 const appointments: Appointment[] = [];
+
+const categories: Category[] = [
+  {
+    text: 'Break',
+    id: 1,
+    color: '#00FF00'
+  },
+  {
+    text: 'Creative',
+    id: 2,
+    color: '#0000FF'
+  }, {
+    text: 'Academic',
+    id: 3,
+    color: '#FF0000'
+  }
+]
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +64,10 @@ export class AppointmentService {
 
   getPresentations(): Presentation[] {
     return presentations;
+  }
+
+  getCategories(): Category[] {
+    return categories;
   }
 
   addPresentation(presentation: PresentationFormData) {

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Appointment, Presentation, AppointmentService } from 'src/app/appointment.service';
+import { Appointment, Presentation, AppointmentService, Category } from 'src/app/appointment.service';
+import { SchedulerExportService } from './scheduler-export.service';
 
 export interface PresentationFormData {
   title: string;
   presenter: string;
+  categoryId: number;
   duration: number;
 }
 
@@ -11,14 +13,19 @@ export interface PresentationFormData {
   selector: 'app-scheduler',
   templateUrl: './scheduler.component.html',
   styleUrls: ['./scheduler.component.scss'],
-  providers: [AppointmentService]
+  providers: [
+    AppointmentService,
+    SchedulerExportService
+  ]
 })
 export class SchedulerComponent implements OnInit {
   appointments: Appointment[] = [];
   presentations: Presentation[] = [];
+  categories: Category[] = [];
   newPresentation: PresentationFormData = {
     title: '',
     presenter: '',
+    categoryId: 1,
     duration: 30
   };
   selectedPresentation: Presentation | undefined;
@@ -37,13 +44,16 @@ export class SchedulerComponent implements OnInit {
     text: 'Cancel',
     type: 'normal',
     onClick: () => { this.addPresentationVisible = false; }
-  }
+  };
+
+
 
   constructor(private apptService: AppointmentService) { }
   
   ngOnInit() {
     this.appointments = this.apptService.getAppointments();
     this.presentations = this.apptService.getPresentations();
+    this.categories = this.apptService.getCategories();
 
     // initialize new presentation data
     this.clearNewPresentation();
@@ -56,6 +66,7 @@ export class SchedulerComponent implements OnInit {
     this.newPresentation = {
       title: '',
       presenter: '',
+      categoryId: 2,
       duration: 30
     }
   }
@@ -110,6 +121,17 @@ export class SchedulerComponent implements OnInit {
     }, {
       dataField: 'presenter',
       editorType: 'dxTextBox'
+    }, {
+      label: {
+        text: 'Category'
+      },
+      editorType: 'dxSelectBox',
+      dataField: 'categoryId',
+      editorOptions: {
+        items: that.categories,
+        displayExpr: 'text',
+        valueExpr: 'id'
+      }
     }, {
       dataField: 'duration',
       editorType: 'dxNumberBox',
