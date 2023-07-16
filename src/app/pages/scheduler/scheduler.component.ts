@@ -48,7 +48,7 @@ export class SchedulerComponent implements OnInit {
 
 
 
-  constructor(private apptService: AppointmentService) { }
+  constructor(private apptService: AppointmentService, private exportService: SchedulerExportService) { }
   
   ngOnInit() {
     this.appointments = this.apptService.getAppointments();
@@ -190,5 +190,9 @@ export class SchedulerComponent implements OnInit {
   removePresentation(presentation: Presentation): void {
     const index = this.presentations.indexOf(presentation);
     this.presentations.splice(index,1);
+  }
+
+  exportExcel(): void {
+    this.exportService.exportExcel(this.appointments, 'schedule');
   }
 }
