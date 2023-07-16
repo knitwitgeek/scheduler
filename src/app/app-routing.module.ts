@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
-    path: 'pages/scheduler',
+    path: 'scheduler',
     component: SchedulerComponent,
     canActivate: [ AuthGuardService ]
   },
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: 'scheduler'
   }
 ];
 
