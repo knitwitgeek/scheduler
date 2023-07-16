@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from './shared/services';
 import { HomeComponent } from './pages/home/home.component';
-import { DxDataGridModule, DxFormModule, DxSchedulerModule, DxDraggableModule, DxScrollViewModule, DxButtonModule, DxPopupModule } from 'devextreme-angular';
+import { DxDataGridModule, DxFormModule, DxSchedulerModule, DxDraggableModule, DxScrollViewModule, DxButtonModule, DxPopupModule, DxSelectBoxModule } from 'devextreme-angular';
 import { SchedulerComponent } from './pages/scheduler/scheduler.component';
 import { CommonModule } from '@angular/common';
 
@@ -32,6 +32,7 @@ const routes: Routes = [
     DxScrollViewModule,
     DxButtonModule,
     DxPopupModule,
+    DxSelectBoxModule,
     CommonModule
   ],
   providers: [AuthGuardService],

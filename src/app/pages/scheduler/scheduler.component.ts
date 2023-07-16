@@ -46,6 +46,13 @@ export class SchedulerComponent implements OnInit {
     onClick: () => { this.addPresentationVisible = false; }
   };
 
+  categoryEditorOptions = {
+    dataSource: this.apptService.getCategories(),
+    valueExpr: 'id',
+    displayExpr: 'text',
+    placeholder: 'Choose Category'
+  };
+
 
 
   constructor(private apptService: AppointmentService, private exportService: SchedulerExportService) { }

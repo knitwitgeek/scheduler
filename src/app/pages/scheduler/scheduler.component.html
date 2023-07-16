@@ -86,7 +86,10 @@
                     <dxi-validation-rule type="required" message="Title is required"></dxi-validation-rule>
                 </dxi-item>
                 <dxi-item dataField="presenter"></dxi-item>
-                <dxi-item dataField="categoryId"></dxi-item>
+                <dxi-item dataField="categoryId"
+                    editorType="dxSelectBox"
+                    [editorOptions]="categoryEditorOptions">
+                </dxi-item>
                 <dxi-item dataField="duration">
                     <dxi-validation-rule type="required" message="Duration is required"></dxi-validation-rule>
                 </dxi-item>
@@ -104,7 +107,7 @@
         [hideOnOutsideClick]="true"
         [(visible)]="editPresentationVisible"
         [width]="600"
-        [height]="400"
+        [height]="500"
         title="Edit Activity">
         <form (submit)="saveChanges($event)">
             <dx-form
@@ -116,6 +119,7 @@
                     <dxi-validation-rule type="required" message="Title is required"></dxi-validation-rule>
                 </dxi-item>
                 <dxi-item dataField="presenter"></dxi-item>
+                <dxi-item dataField="categoryId"></dxi-item>
                 <dxi-item dataField="duration">
                     <dxi-validation-rule type="required" message="Duration is required"></dxi-validation-rule>
                 </dxi-item>
