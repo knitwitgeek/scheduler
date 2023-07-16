@@ -205,6 +205,7 @@ export class SchedulerComponent implements OnInit {
         Title: entry.title,
         Presenter: entry.presenter,
         Duration: entry.duration,
+        Category: this.categories.find((cat) => cat.id == entry.categoryId)?.text,
         StartDate: entry.startDate.toLocaleDateString(),
         StartTime: entry.startDate.toLocaleTimeString(),
         EndDate: entry.endDate.toLocaleDateString(),
