@@ -119,7 +119,10 @@
                     <dxi-validation-rule type="required" message="Title is required"></dxi-validation-rule>
                 </dxi-item>
                 <dxi-item dataField="presenter"></dxi-item>
-                <dxi-item dataField="categoryId"></dxi-item>
+                <dxi-item dataField="categoryId"
+                    editorType="dxSelectBox"
+                    [editorOptions]="categoryEditorOptions">
+                </dxi-item>
                 <dxi-item dataField="duration">
                     <dxi-validation-rule type="required" message="Duration is required"></dxi-validation-rule>
                 </dxi-item>
