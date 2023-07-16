@@ -192,7 +192,25 @@ export class SchedulerComponent implements OnInit {
     this.presentations.splice(index,1);
   }
 
+  prepareAppointments(): any[] {
+    return this.appointments.map((entry) => {
+      return { 
+        Title: entry.title,
+        Presenter: entry.presenter,
+        Duration: entry.duration,
+        StartDate: entry.startDate.toLocaleDateString(),
+        StartTime: entry.startDate.toLocaleTimeString(),
+        EndDate: entry.endDate.toLocaleDateString(),
+        EndTime: entry.endDate.toLocaleTimeString()
+      }
+    });
+  }
+
   exportExcel(): void {
-    this.exportService.exportExcel(this.appointments, 'schedule');
+    // TODO: create prepared data using appointments
+    // exclude unneeded items: presentationId, categoryId, dayLong
+    // split appointment start and end into date and time?? maybe leave as is
+    let exportData = this.prepareAppointments();
+    this.exportService.exportExcel(exportData, 'schedule');
   }
 }
