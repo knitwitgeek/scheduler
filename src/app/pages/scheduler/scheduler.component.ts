@@ -221,4 +221,9 @@ export class SchedulerComponent implements OnInit {
     let exportData = this.prepareAppointments();
     this.exportService.exportExcel(exportData, 'schedule');
   }
+
+  exportCSV(): void {
+    let exportData = this.prepareAppointments();
+    this.exportService.exportCSV(exportData, 'schedule');
+  }
 }
