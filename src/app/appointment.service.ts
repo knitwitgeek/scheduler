@@ -30,7 +30,7 @@ const presentations: Presentation[] = [
     presentationId: 1,
     categoryId: 2,
     title: 'Opening Ceremony',
-    presenter: 'Jake Lockley',
+    presenter: '',
     duration: 10
   }
 ];
