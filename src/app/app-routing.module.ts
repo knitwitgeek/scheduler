@@ -7,8 +7,7 @@ import { CommonModule } from '@angular/common';
 const routes: Routes = [
   {
     path: 'scheduler',
-    component: SchedulerComponent,
-    canActivate: [  ]
+    component: SchedulerComponent
   },
   {
     path: '**',
