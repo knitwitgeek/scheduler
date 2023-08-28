@@ -41,16 +41,16 @@ const categories: Category[] = [
   {
     text: 'Break',
     id: 1,
-    color: '#00FF00'
+    color: '#3c6ccc'
   },
   {
     text: 'Creative',
     id: 2,
-    color: '#0000FF'
+    color: '#369696'
   }, {
     text: 'Academic',
     id: 3,
-    color: '#FF0000'
+    color: '#f96939'
   }
 ]
 
