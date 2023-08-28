@@ -21,7 +21,7 @@
         </dx-draggable>
         </dx-draggable>
     </dx-scroll-view>
-    <dx-scheduler 
+    <dx-scheduler
         id="scheduler"
         timeZone="America/New_York"
         [dataSource]="appointments"
@@ -70,6 +70,8 @@
     </dx-scheduler>
     <dx-button icon="plus" text="Add Activity" (click)="addPresentation()"></dx-button>
     <dx-button icon="doc" text="Export" type="success" style="float:right" (click)="exportCSV()"></dx-button>
+
+    <!-- Popup defintions -->
     <dx-popup
         [dragEnabled]="false"
         [hideOnOutsideClick]="true"
@@ -103,6 +105,7 @@
             </dx-form>
         </form>
     </dx-popup>
+
     <dx-popup
         [dragEnabled]="false"
         [hideOnOutsideClick]="true"
